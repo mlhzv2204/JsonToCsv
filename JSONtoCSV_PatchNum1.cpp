@@ -13,8 +13,8 @@
 #include <windows.h> // Для русского языка в консоле
 #include <ctime> // Для clock()
 #include <corecrt_io.h> // Для поиска файлов .json в текущей директории папки
-#include <chrono>
-#include <iostream>
+#include <chrono> // для расчета времени работы программы
+#include <iostream> // для cin cout
 
 #define CHAR 200
 #define CHARTEMP 150 
