@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="JSONtoCSV_PatchNum1.cpp">
+    <ClCompile Include="JSONtoCSV_mlhzv2204.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
