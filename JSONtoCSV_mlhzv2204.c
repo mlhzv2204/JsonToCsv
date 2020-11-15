@@ -30,11 +30,11 @@ int main()
 	char temp_title[CHARTEMP]; // Временно хранится название предмета
 	char temp_lecturer[CHARTEMP]; // Временно хранится имя преподавателя
 	char temp_type[CHARTEMP]; // Временно хранится вид занятия
-	char temp_subgroup[CHARTEMP]; // Временно хранится информация о проведении занятия для всей группы или подгруппы
+	char temp_subgroup[16]; // Временно хранится информация о проведении занятия для всей группы или подгруппы
 	char temp_classroom[CHARTEMP]; // Временно хранится место проведения занятия
 	char temp_start[CHARTEMP]; // Временно хранится время начала занятия
 	char temp_end[CHARTEMP]; // Временно хранится время конца занятия
-	char temp_frequency[CHARTEMP]; // Временно хранится инфа о проведении занатия каждую неделю, один раз, через каждые две недели
+	char temp_frequency[16]; // Временно хранится инфа о проведении занатия каждую неделю, один раз, через каждые две недели
 	char temp_date[CHARTEMP]; // Даты проведения занатий
 
 	// ОБЪЯВЛЕНИЕ ПЕРЕМЕННЫХ ДЛЯ РАБОТЫ С ДАТАМИ
@@ -116,6 +116,7 @@ int main()
 					correct = strchr(p, double_marks);
 					*correct = '\0';
 					strcpy_s(temp_title, sizeof(temp_title), p);
+					continue;
 				}
 
 				// Поиск слова "lecturer" в строке файла если находит, то сохраняет после себя temp_lecturer, в котором хранится название предмета
@@ -125,6 +126,7 @@ int main()
 					correct = strchr(p, double_marks);
 					*correct = '\0';
 					strcpy_s(temp_lecturer, sizeof(temp_lecturer), p);
+					continue;
 				}
 				
 				// Поиск слова "type" в строке файла если находит, то сохраняет после себя temp_type, в котором хранится вид занаятия (лекция/семинар/лаба)
@@ -140,6 +142,7 @@ int main()
 						strcpy_s(temp_type, sizeof(temp_type), "Семинар");
 					else if (strcmp(temp_type, "Laboratory") == 0)
 						strcpy_s(temp_type, sizeof(temp_type), "Лаба");
+					continue;
 				}
 
 				// Поиск слова "subgroup" в строке файла если находит, то сохраняет после себя temp_subgroup, в котором хранится инфа о принадлежности занятия для одной из подгурпп, либо всей группы
@@ -155,6 +158,7 @@ int main()
 						strcpy_s(temp_subgroup, sizeof(temp_subgroup), "(А)");
 					else if (strcmp(temp_subgroup, "B") == 0)
 						strcpy_s(temp_subgroup, sizeof(temp_subgroup), "(Б)");
+					continue;
 				}
 
 				// Поиск слова "classroom" в строке файла если находит, то сохраняет после себя temp_classroom, в котором хранится номер аудитории/место проведения занятия
@@ -164,6 +168,7 @@ int main()
 					correct = strchr(p, double_marks);
 					*correct = '\0';
 					strcpy_s(temp_classroom, sizeof(temp_classroom), p);
+					continue;
 				}
 
 				// Поиск слова "start" в строке файла если находит, то сохраняет после себя temp_start, в котором хранится время начала занятия
@@ -174,6 +179,7 @@ int main()
 					*correct = '\0';
 					strcpy_s(temp_start, sizeof(temp_start), p);
 					strcat_s(temp_start, sizeof(temp_start), ":00");
+					continue;
 				}
 
 				// Поиск слова "end" в строке файла если находит, то сохраняет после себя temp_end, в котором хранится время окончания занятия
@@ -184,6 +190,7 @@ int main()
 					*correct = '\0';
 					strcpy_s(temp_end, sizeof(temp_end), p);
 					strcat_s(temp_end, sizeof(temp_end), ":00");
+					continue;
 				}
 				// Поиск слова "frequency" в строке файла если находит, то сохраняет после себя temp_frequency, в котором хранится частота повторения занятия
 				if (p = strstr(ready_string, frequency))
@@ -192,6 +199,7 @@ int main()
 					correct = strchr(p, double_marks);
 					*correct = '\0';
 					strcpy_s(temp_frequency, sizeof(temp_frequency), p);
+					continue;
 				}
 
 				// Поиск слова "date" в строке файла если находит, то сохраняет после себя temp_date, в котором хранится дата/даты проведения занятия или занятий
@@ -205,7 +213,7 @@ int main()
 					if (strcmp(temp_frequency, "once") == 0)
 					{
 						if (strlen(temp_classroom) == 0)
-							fprintf_s(OutputFile, "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"Ложь\",\"Ложь\",,,,,,,\"2\",\"Низкая\",,\"%s\",\"%s\",\"Обычный\",,,\"Ложь\"\n", temp_title, temp_date, temp_start, temp_date, temp_end, temp_type, temp_lecturer);
+							fprintf_s(OutputFile, "\"%s%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"Ложь\",\"Ложь\",,,,,,,\"2\",\"Низкая\",,\"%s\",\"%s\",\"Обычный\",,,\"Ложь\"\n", temp_title, temp_subgroup, temp_date, temp_start, temp_date, temp_end, temp_type, temp_lecturer);
 						else
 							fprintf_s(OutputFile, "\"%s. %s%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"Ложь\",\"Ложь\",,,,,,,\"2\",\"Низкая\",,\"%s\",\"%s\",\"Обычный\",,,\"Ложь\"\n", temp_title, temp_classroom, temp_subgroup, temp_date, temp_start, temp_date, temp_end, temp_type, temp_lecturer);
 					}
@@ -259,11 +267,12 @@ int main()
 								}
 							}
 						} while (int_first_month != int_second_month || int_first_day != int_second_day);
-						if (strlen(temp_classroom) == 0)
-							fprintf_s(OutputFile, "\"%s%s\",\""YEAR".%02d.%02d\",\"%s\",\""YEAR".%02d.%02d\",\"%s\",\"Ложь\",\"Ложь\",,,,,,,\"2\",\"Низкая\",,\"%s\",\"%s\",\"Обычный\",,,\"Ложь\"\n", temp_title, temp_subgroup, int_first_month, int_first_day, temp_start, int_first_month, int_first_day, temp_end, temp_type, temp_lecturer);
-						else
-							fprintf_s(OutputFile, "\"%s. %s%s\",\""YEAR".%02d.%02d\",\"%s\",\""YEAR".%02d.%02d\",\"%s\",\"Ложь\",\"Ложь\",,,,,,,\"2\",\"Низкая\",,\"%s\",\"%s\",\"Обычный\",,,\"Ложь\"\n", temp_title, temp_classroom, temp_subgroup, int_first_month, int_first_day, temp_start, int_first_month, int_first_day, temp_end, temp_type, temp_lecturer);
+							if (strlen(temp_classroom) == 0)
+								fprintf_s(OutputFile, "\"%s%s\",\""YEAR".%02d.%02d\",\"%s\",\""YEAR".%02d.%02d\",\"%s\",\"Ложь\",\"Ложь\",,,,,,,\"2\",\"Низкая\",,\"%s\",\"%s\",\"Обычный\",,,\"Ложь\"\n", temp_title, temp_subgroup, int_first_month, int_first_day, temp_start, int_first_month, int_first_day, temp_end, temp_type, temp_lecturer);
+							else
+								fprintf_s(OutputFile, "\"%s. %s%s\",\""YEAR".%02d.%02d\",\"%s\",\""YEAR".%02d.%02d\",\"%s\",\"Ложь\",\"Ложь\",,,,,,,\"2\",\"Низкая\",,\"%s\",\"%s\",\"Обычный\",,,\"Ложь\"\n", temp_title, temp_classroom, temp_subgroup, int_first_month, int_first_day, temp_start, int_first_month, int_first_day, temp_end, temp_type, temp_lecturer);
 					}
+					continue;
 				}
 			}
 			fclose(SourceFile); // Закрытие потока с исходным файлом .json
