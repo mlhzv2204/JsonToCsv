@@ -8,16 +8,16 @@
 #include <stdlib.h> // Для atoi()
 #include <windows.h> // Для русского языка в консоле
 #include <corecrt_io.h> // Для поиска файлов .json в текущей директории папки
-#include "getCPUTime.c"
+#include "getCPUTime.c" // Для вычисления скорости работы программы
 
 #define CHARTEMP 350 // буфер
-#define FEBRUARY 29 // для високосных 29, для остальных 28
-#define YEAR "2020" // выбор года
+#define FEBRUARY 28 // для високосных 29 (например 2024, 2028), для остальных 28
+#define YEAR "2021" // выбор года
 
 int main()
 {
 	SetConsoleOutputCP(65001);
-	SetConsoleCP(65001);
+	SetConsoleCP(1251);
 
 	double startTime, endTime;
 	startTime = getCPUTime();
