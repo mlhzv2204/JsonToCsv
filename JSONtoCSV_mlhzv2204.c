@@ -12,7 +12,7 @@
 
 #define CHARTEMP 350 // буфер
 #define FEBRUARY 28 // для високосных 29 (например 2024, 2028), для остальных 28
-#define YEAR "2021" // выбор года
+#define YEAR "2022" // выбор года
 
 int main()
 {
@@ -283,8 +283,8 @@ int main()
 	_findclose(hJsonFile); // Закрытие знаковой целочисленной переменной hJsonFile
 	
 	endTime = getCPUTime();
-	printf("Number of saved files = %d\n", number_of_saved_files);
-	fprintf(stderr, "CPU time used = %.3lf msec\n", (endTime - startTime)*1000);
-	system("pause");
+	//printf("Number of saved files = %d\n", number_of_saved_files);
+	//fprintf(stderr, "CPU time used = %.3lf msec\n", (endTime - startTime)*1000);
+	//system("pause");
 	return 0;
 }
